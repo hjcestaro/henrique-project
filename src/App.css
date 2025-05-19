@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+.banner {
+  background-image: url('./assets/banner.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.526);
+}
+
+.post article h1{
+  font-size: 2rem;
+  padding: 10px 0;
+}
+
+.post article h2 {
+  font-size: 1.5rem;
+  padding: 5px 0;
+}
