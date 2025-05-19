@@ -1,5 +1,5 @@
-import Cecicat from "../assets/cecicat.jpg";
-import Ammdvs from "../assets/ammdvs.jpg";
+import Cecicat from "../assets/cecicat.png";
+import Ammdvs from "../assets/ammdvs.png";
 
 export default function Projects() {
   return (
