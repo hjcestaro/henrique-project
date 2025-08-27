@@ -1,78 +1,92 @@
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Home, User, Code, Book, Mail, Menu, X } from "lucide-react";
+
 
 export default function Navbar() {
-  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  if (pathname !== "/") return null;
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const menuItems = [
-    { label: "Início", href: "#banner" },
-    { label: "Sobre", href: "#sobre" },
-    { label: "Projetos", href: "#projects" },
-    { label: "Blog", href: "#blog" },
+    { label: "Início", href: "/", icon: <Home size={18} /> },
+    { label: "Sobre", href: "#sobre", icon: <User size={18} /> },
+    { label: "Projetos", href: "#projects", icon: <Code size={18} /> },
+    { label: "Blog", href: "#blog", icon: <Book size={18} /> },
+    { label: "Contato", href: "#contato", icon: <Mail size={18} /> },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gray-950 text-white shadow-md z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <span className="text-xl font-bold">MeuPortfólio</span>
-        <button className="md:hidden" onClick={toggleMenu}>
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+    <>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+    
+        <Link
+          to="/"
+          className="text-xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent flex items-center"
+          onClick={closeMenu}
+        >
+          <span className="mr-2">{"</>"}</span> Henrique
+        </Link>
 
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex items-center space-x-2">
           {menuItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="hover:text-blue-400 transition-colors duration-200"
+              className="px-3 py-2 text-sm font-medium rounded-lg transition-colors text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 flex items-center"
             >
+              <span className="mr-2">{item.icon}</span>
               {item.label}
             </a>
           ))}
         </div>
+
+  
+        <div className="flex md:hidden items-center space-x-2">
+          <button
+            onClick={toggleMenu}
+            className="p-2 rounded-full text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
+      
       {isOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-2">
+        <div className="md:hidden bg-white dark:bg-gray-900 shadow-lg rounded-b-lg">
           {menuItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={closeMenu}
-              className="block py-1 hover:text-blue-400 transition-colors duration-200"
+              className="px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-b border-gray-100 dark:border-gray-800 flex items-center"
             >
+              <span className="mr-3">{item.icon}</span>
               {item.label}
             </a>
           ))}
         </div>
       )}
     </nav>
+    </>
   );
 }
