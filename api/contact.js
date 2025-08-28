@@ -1,30 +1,27 @@
-const { Resend } = require("resend");
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
-
-  const { name, email, message } = req.body;
 
   try {
+    const { name, email, message } = req.body;
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     await resend.emails.send({
-      from: "Contato <no-reply@seuprojeto.com>",
-      to: "cestarodev@gmail.com",
-      subject: `Mensagem de ${name}`,
-      html: `
-        <h2>Nova mensagem</h2>
-        <p><b>Nome:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p>${message}</p>
-      `,
+      from: "Contato <contato@seu-dominio.com>",
+      to: "hjcestaro70@gmail.com",
+      subject: `Nova mensagem de ${name}`,
+      html: `<p><strong>Nome:</strong> ${name}</p>
+             <p><strong>Email:</strong> ${email}</p>
+             <p><strong>Mensagem:</strong> ${message}</p>`,
     });
 
-    return res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Erro ao enviar" });
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Erro Resend:", err);
+    res.status(500).json({ error: "Erro ao enviar email" });
   }
-};
+}
