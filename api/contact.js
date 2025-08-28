@@ -1,8 +1,8 @@
-import { Resend } from "resend";
+const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
   }
@@ -22,9 +22,9 @@ export default async function handler(req, res) {
       `,
     });
 
-    res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao enviar" });
+    return res.status(500).json({ error: "Erro ao enviar" });
   }
-}
+};
