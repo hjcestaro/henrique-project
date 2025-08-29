@@ -2,7 +2,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { client } from "../contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { ArrowLeft, CalendarDays, Clock, Share2 } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock, Facebook, Mail, Phone, Share2 } from "lucide-react";
 
 export default function Post() {
   const { slug } = useParams();
@@ -36,10 +36,27 @@ export default function Post() {
     fetchPost();
   }, [slug, navigate]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+  const handleShare = (platform) => {
+    const postUrl = encodeURIComponent(window.location.href);
+    const postTitle = encodeURIComponent(post.fields.title);
+
+    let shareUrl = "";
+
+    switch (platform) {
+      case "whatsapp":
+        shareUrl = `https://api.whatsapp.com/send?text=${postTitle}%20${postUrl}`;
+        break;
+      case "facebook":
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${postUrl}`;
+        break;
+      case "email":
+        shareUrl = `mailto:?subject=${postTitle}&body=${postUrl}`;
+        break;
+      default:
+        return;
+    }
+
+    window.open(shareUrl, "_blank");
   };
 
   if (loading) {
@@ -138,16 +155,31 @@ export default function Post() {
               className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-500 font-medium"
             >
               <ArrowLeft className="mr-2" />
-              Voltar para o blog
+              Voltar para home
             </Link>
 
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors"
-            >
-              <Share2 className="mr-2" />
-              Compartilhar post
-            </button>
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={() => handleShare("whatsapp")}
+                className="px-3 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full transition-colors flex items-center"
+              >
+                <Phone />
+              </button>
+
+              <button
+                onClick={() => handleShare("facebook")}
+                className="px-3 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors flex items-center"
+              >
+                <Facebook />
+              </button>
+
+              <button
+                onClick={() => handleShare("email")}
+                className="px-3 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-full transition-colors flex items-center"
+              >
+                <Mail />
+              </button>
+            </div>
           </div>
         </div>
       </div>

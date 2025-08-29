@@ -11,7 +11,7 @@ export default function Blog() {
     client
       .getEntries({
         content_type: "personalBlog",
-        order: "-fields.date", // Ordena por data mais recente
+        order: "-fields.date",
       })
       .then((res) => {
         setPosts(res.items);

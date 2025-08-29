@@ -28,14 +28,16 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 border-t border-gray-800">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        {/* Grid layout melhorado */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          {/* Seção de perfil */}
           <div className="md:col-span-2">
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-              <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
                 Henrique Julio Cestaro
               </span>
             </h3>
-            <p className="mb-4">
+            <p className="mb-6 max-w-md text-gray-400 leading-relaxed">
               Desenvolvedor Front-end especializado em criar experiências
               digitais modernas, responsivas e acessíveis.
             </p>
@@ -44,106 +46,38 @@ export default function Footer() {
                 href="https://linkedin.com/in/henrique-julio-cestaro"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-amber-500 transition-colors"
+                className="bg-gray-800 p-3 rounded-lg text-gray-400 hover:text-amber-400 hover:bg-gray-750 transition-all duration-300 transform hover:-translate-y-1"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={20} />
               </a>
               <a
-                href="https://github.com/seu-usuario"
+                href="https://github.com/hjcestaro"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-amber-500 transition-colors"
+                className="bg-gray-800 p-3 rounded-lg text-gray-400 hover:text-amber-400 hover:bg-gray-750 transition-all duration-300 transform hover:-translate-y-1"
                 aria-label="GitHub"
               >
                 <Github size={20} />
               </a>
               <a
-                href="mailto:seu.email@exemplo.com"
-                className="text-gray-400 hover:text-amber-500 transition-colors"
+                href="mailto:hjcestaro@hotmail.com"
+                className="bg-gray-800 p-3 rounded-lg text-gray-400 hover:text-amber-400 hover:bg-gray-750 transition-all duration-300 transform hover:-translate-y-1"
                 aria-label="Email"
               >
                 <Mail size={20} />
               </a>
             </div>
           </div>
-
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">
-              Links Rápidos
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/#banner"
-                  className="hover:text-amber-500 transition-colors"
-                >
-                  Início
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/#sobre"
-                  className="hover:text-amber-500 transition-colors"
-                >
-                  Sobre
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/#projects"
-                  className="hover:text-amber-500 transition-colors"
-                >
-                  Projetos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/#blog"
-                  className="hover:text-amber-500 transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/#contato"
-                  className="hover:text-amber-500 transition-colors"
-                >
-                  Contato
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">
-              Tecnologias
-            </h4>
-            <ul className="space-y-2">
-              {[
-                "React",
-                "Next.js",
-                "TypeScript",
-                "Tailwind CSS",
-                "Wordpress",
-              ].map((tech) => (
-                <li key={tech} className="flex items-center">
-                  <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
-                  <span>{tech}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p>
+        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500 mb-4 md:mb-0">
             © {new Date().getFullYear()} Henrique Julio Cestaro. Todos os
             direitos reservados.
           </p>
-          <p className="mt-2 md:mt-0">
-            Feito com <span className="text-amber-500">❤️</span> e React
+          <p className="text-sm text-gray-500 flex items-center">
+            Feito com <span className="text-amber-500 mx-1">❤️</span> e React
           </p>
         </div>
       </div>
@@ -151,7 +85,7 @@ export default function Footer() {
       {showScrollButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 animate-bounce"
+          className="fixed bottom-6 right-6 bg-amber-500 hover:bg-amber-400 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-amber-500/25 z-50"
           aria-label="Voltar ao topo"
         >
           <ArrowUp size={20} />

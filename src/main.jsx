@@ -1,16 +1,21 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Post from "./Pages/Post.jsx";
 import Layout from "./Layout.jsx";
+import App from "./App.jsx";
+import Post from "./Pages/Post.jsx";
+import PostsBlog from "./Pages/PostsBlog.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Layout><App /></Layout>} />
-      <Route path="/blog/:slug" element={<Layout><Post /></Layout>} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<App />} />
+        <Route path="/blog" element={<PostsBlog />} />
+        <Route path="/blog/:slug" element={<Post />} />
+      </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
